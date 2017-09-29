@@ -1,8 +1,25 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import logo from './logo.svg'
+import './App.css'
 
 class App extends Component {
+    
+    constructor(props) {
+        super(props)
+        this.state = {
+            inStockOnlyCheck: false
+        }
+        this.changeInStockOnlyCheck = this.changeInStockOnlyCheck.bind(this)
+    }
+
+    keyGenerator (a, b) {
+        return a+b
+    }
+
+    changeInStockOnlyCheck() {
+        this.setState({inStockOnlyCheck: !this.state.inStockOnlyCheck})
+    }
+
     render() {
         const items = [
             {category: 'Sporting Goods', name:'Football', price:'$59.99', stocked:true},
@@ -28,29 +45,37 @@ class App extends Component {
         const rows = []
         items.sort(compare)
         for(let i = 0; i<items.length; i++){
+            let color = items[i].stocked ? {color: 'black'} : {color: 'red'}
             if (items[i].category !== currentCategory){
                 currentCategory = items[i].category
-                rows.push(<tr><th colspan="2">{currentCategory}</th></tr>)
+                const ckey = this.keyGenerator('category', i)
+                rows.push(<tr key={ckey}><th colSpan="2">{currentCategory}</th></tr>)
             }
-            if (items[i].stocked){
-                rows.push(<tr><td>{items[i].name}</td><td>{items[i].price}</td></tr>)
-            } else {
-                rows.push(<tr style={{color:'red'}}><td>{items[i].name}</td><td>{items[i].price}</td></tr>)
+            if (!this.state.inStockOnlyCheck | items[i].stocked)
+            {
+                const key = this.keyGenerator('row', i)
+                rows.push(<tr key={key}><td style={color}>{items[i].name}</td><td>{items[i].price}</td></tr>)
             }
         }
 
         
         return (
-            <p>
+            <section>
                 <input type="text" placeholder="search" /> 
                 <br />
-                <input type="checkbox" name="stocked" />
-                <label for="stocked">Stocked Items Only</label>
+                <input 
+                    checked = {this.state.inStockOnlyCheck}
+                    onChange = {this.changeInStockOnlyCheck}
+                    type="checkbox" 
+                    name="stocked" />
+                <label htmlFor="stocked">Stocked Items Only</label>
                 <table>
-                    <tr><th>Item</th><th>Price</th></tr>
-                    {rows}
+                    <tbody>
+                        <tr><th>Item</th><th>Price</th></tr>
+                        {rows}
+                    </tbody>
                 </table>
-            </p>
+            </section>
         )
     }
 }
