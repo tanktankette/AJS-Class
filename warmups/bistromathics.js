@@ -14,10 +14,10 @@ const receipt = (costsPerItem, tip) => {
     for(let i = 0; i < costsPerItem.length; i++){
         total += costsPerItem[i]
     }
-    return parseAmount(Math.round(total * (109 + tip))/100)
+    return Math.round(total * (109 + tip))/100
 }
 
-console.log(receipt([20, 30, 12.50], 14.4))
+console.log(parseAmount(receipt([20, 30, 12.50], 14.43)))
 
 const splitTheBill = (total, names) => {
     const part = Math.floor(total * 100 / names.length)
@@ -34,4 +34,4 @@ const splitTheBill = (total, names) => {
     }, this);
 }
 
-splitTheBill(12.32, ['Jenna', 'Ruth', 'Nick'])
+splitTheBill(receipt([20, 30, 12.50], 14.43), ['Jenna', 'Ruth', 'Nick'])
