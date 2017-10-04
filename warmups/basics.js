@@ -23,3 +23,15 @@ const front3 = (s) => {
 }
 
 console.log(front3('test'))
+
+const stringTimes = (string, times) => {
+    let out = ""
+    for (let i = 0; i < times; i++){
+        out += string
+    }
+    return out
+}
+
+console.log(stringTimes('Hi', 2)) // 'HiHi'
+console.log(stringTimes('Hi', 3)) // 'HiHiHi'
+console.log(stringTimes('Hi', 1)) // 'Hi'
