@@ -1,16 +1,37 @@
-const receipt = (costsPerItem, t) => {
+const parseAmount = (amount) => {
+    amount = '$' + amount
+    if (amount.indexOf('.') == -1){
+        return amount + '.00'
+    } else if (amount.length - amount.indexOf('.') < 3){
+        return amount + 0
+    } else {
+        return amount
+    }
+}
+
+const receipt = (costsPerItem, tip) => {
     let total = 0
     for(let i = 0; i < costsPerItem.length; i++){
         total += costsPerItem[i]
     }
-    let s = '$' + Math.round(total * (109 + t))/100
-    if (s.indexOf('.') == -1){
-        return s + '.00'
-    } else if (s.length - s.indexOf('.') < 3){
-        return s + 0
-    } else {
-        return s
-    }
+    return parseAmount(Math.round(total * (109 + tip))/100)
 }
 
 console.log(receipt([20, 30, 12.50], 14.4))
+
+const splitTheBill = (total, names) => {
+    const part = Math.floor(total * 100 / names.length)
+    let pennies = total * 100 - part * names.length
+    names.forEach(function(element) {
+        let owed = part
+        if(pennies > 0){
+            pennies -= 1
+            owed += 1
+        }
+
+        owed = parseAmount(owed / 100)
+        console.log(element + ' owes: ' + owed)
+    }, this);
+}
+
+splitTheBill(12.32, ['Jenna', 'Ruth', 'Nick'])

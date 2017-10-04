@@ -11,7 +11,7 @@ console.log(notString('not bad')) // 'not bad'
 
 
 const missingChar = (s, i) => {
-    return s.slice(0,i) + s.slice(i + 1,s.length)
+    return s.slice(0, i) + s.slice(i + 1, s.length)
 }
 
 console.log(missingChar('kitten', 1)) // 'ktten'
