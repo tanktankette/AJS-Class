@@ -23,6 +23,7 @@ const front3 = (s) => {
 }
 
 console.assert(front3('test') === 'testestes')
+console.assert(front3('te') === 'tetete')
 
 const stringTimes = (string, times) => {
     let out = ''
@@ -37,13 +38,18 @@ console.assert(stringTimes('Hi', 3) === 'HiHiHi')
 console.assert(stringTimes('Hi', 1) === 'Hi')
 
 const stringBits = (string) => {
-    let out = ''
-    for (let i = 0; i < string.length; i+=2) {
-        out += string[i]
-    }
-    return out
+    return string.split('').filter((c, i) => i % 2 === 0).join("")
 }
 
 console.assert(stringBits('Hello') === 'Hlo')
 console.assert(stringBits('Hi') === 'H')
 console.assert(stringBits('Heeololeo') === 'Hello')
+
+const stringSplosion = (string) => {
+    return Array(string.length).fill(string).map((v, i) => v.slice(0,i+1)).join("")
+}
+
+console.assert(stringSplosion('Code') === 'CCoCodCode')
+console.assert(stringSplosion('abc') === 'aababc')
+console.assert(stringSplosion('ab') === 'aab')
+
