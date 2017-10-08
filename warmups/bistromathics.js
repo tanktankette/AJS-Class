@@ -10,11 +10,7 @@ const parseAmount = (amount) => {
 }
 
 const receipt = (costsPerItem, tip) => {
-    let total = 0
-    for(let i = 0; i < costsPerItem.length; i++){
-        total += costsPerItem[i]
-    }
-    return Math.round(total * (109 + tip))/100
+    return Math.round(costsPerItem.reduce((total, next) => total+next) * (109 + tip))/100
 }
 
 console.log(parseAmount(receipt([20, 30, 12.50], 14.43)))
@@ -34,4 +30,15 @@ const splitTheBill = (total, names) => {
     }, this);
 }
 
-splitTheBill(receipt([20, 30, 12.50], 14.43), ['Jenna', 'Ruth', 'Nick'])
+splitTheBill(receipt([20, 31, 12.50], 14.43), ['Angela', 'Salvador', 'Rosa'])
+
+
+const funcSplitTheBill = (total, names) => {
+    parts = Array(names.length).fill(Math.floor(total * 100 / names.length)).map((v, i) => total * 100 - v * 3 > i ? (v + 1) / 100 : v / 100)
+
+    names.forEach(function(name, i) {
+        console.log(name + ' owes: ' + parseAmount(parts[i]))
+    }, this);
+}
+
+funcSplitTheBill(receipt([20, 31, 12.50], 14.43), ['Angela', 'Salvador', 'Rosa'])
