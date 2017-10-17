@@ -1,4 +1,6 @@
 import React, {Component} from 'react'
+import ProductRow from './ProductRow'
+import CategoryRow from './CategoryRow'
 
 export default class ProductTable extends Component {
   render () {
@@ -7,13 +9,12 @@ export default class ProductTable extends Component {
     const rows = []
 
     filtered.forEach((record) => {
-      let color = record.stocked ? {color: 'black'} : {color: 'red'}
       if (record.category !== currentCategory) {
         currentCategory = record.category
-        rows.push(<tr key={currentCategory}><th colSpan="2">{currentCategory}</th></tr>)
+        rows.push(<CategoryRow currentCategory={currentCategory} />)
       }
       if (!this.props.inStockOnlyChecked | record.stocked) {
-        rows.push(<tr key={record.category + record.name}><td style={color}>{record.name}</td><td>{record.price}</td></tr>)
+        rows.push(<ProductRow record={record} />)
       }
     })
 
