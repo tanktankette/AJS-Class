@@ -13,10 +13,10 @@ const getSentenceFragment = (offset = 0) => {
 
 const getSentence = (sentence, offset) => {
   return getSentenceFragment(offset)
-    .then((package) => {
-      sentence.push(package.data.join(''))
-      if(package.nextPage){
-        return getSentence(sentence, package.nextPage)
+    .then((pkg) => {
+      sentence.push(pkg.data.join(''))
+      if (pkg.nextPage) {
+        return getSentence(sentence, pkg.nextPage)
       } else {
         return sentence
       }
@@ -24,4 +24,4 @@ const getSentence = (sentence, offset) => {
 }
 
 getSentence([], 0)
-  .then((sentence) => console.log(sentence.join("")))
+  .then((sentence) => console.log(sentence.join('')))

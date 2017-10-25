@@ -12,12 +12,12 @@ const getSentenceFragment = (offset = 0) => {
 }
 
 const getSentence = async (sentence, offset) => {
-  const package = await getSentenceFragment(offset)
-  sentence.push(package.data.join(''))
-  if (package.nextPage === null) {
+  const pkg = await getSentenceFragment(offset)
+  sentence.push(pkg.data.join(''))
+  if (pkg.nextPage === null) {
     return sentence;
   } else {
-    return getSentence(sentence, package.nextPage)
+    return getSentence(sentence, pkg.nextPage)
   }
 }
 

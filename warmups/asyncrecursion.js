@@ -9,13 +9,13 @@ const getSentenceFragment = (offset, callback) => {
 }
 
 const getSentence = (offset, callback) => {
-  getSentenceFragment(offset, (package) => {
-    let sentence = [package.data.join('')]
+  getSentenceFragment(offset, (pkg) => {
+    let sentence = [pkg.data.join('')]
 
-    if (package.nextPage === undefined) {
+    if (pkg.nextPage === undefined) {
       return callback(sentence)
     } else {
-      getSentence(package.nextPage, (fragment) => {
+      getSentence(pkg.nextPage, (fragment) => {
         return callback(sentence + fragment)
       })
     }
