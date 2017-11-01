@@ -19,10 +19,11 @@ fetch('https://test-c7f46.firebaseio.com/thing.json', {method: 'DELETE'}).then((
     const country = faker.address.country()
     const passwordHash = md5(faker.internet.password())
 
-    avatarGenerator(md5(firstName + lastName), Math.random() < 0.5 ? 'male' : 'female', 100)
+    avatarGenerator(md5(firstName + lastName), Math.random() < 0.5 ? 'male' : 'female', 50)
       .toBuffer(function (err, buffer) {
         if (err) {}
         const avatar = 'data:image/png;base64,' + buffer.toString('base64')
+
         const pkg = {
           method: 'POST',
           body: JSON.stringify({
@@ -38,6 +39,7 @@ fetch('https://test-c7f46.firebaseio.com/thing.json', {method: 'DELETE'}).then((
             passwordHash
           })
         }
+        
         fetch('https://test-c7f46.firebaseio.com/thing.json', pkg).then(console.log)
       })
   }
