@@ -1,0 +1,77 @@
+
+const fs = require('fs')
+fs.readFile('map.txt', 'utf8', (e, data) => {
+  let map = []
+  data = data.split('\n')
+  data.shift()
+  data.pop()
+
+  for (let line of data) {
+    let row = []
+    for (let point of line.split(' ')) {
+      row.push([parseInt(point), 0, 0])
+    }
+    map.push(row)
+  }
+
+  const getAdjacentValues = (x, y) => {
+    let results = [map[y][x][0]]
+    if (x > 0) results.push(map[y][x - 1][0])
+    if (x < map.length - 1) results.push(map[y][x + 1][0])
+    if (y > 0) results.push(map[y - 1][x][0])
+    if (y < map[0].length - 1) results.push(map[y + 1][x][0])
+    return results
+  }
+
+  const getAdjacent = (x, y, start, steps = 0) => {
+    let value = map[y][x]
+    let results = []
+    let options = [[y - 1, x], [y + 1, x], [y, x - 1], [y, x + 1]]
+    for (let [y, x] of options) {
+      if (!(map.length > x && x >= 0 && map[0].length > y && y >= 0)) continue
+      let node = map[y][x]
+      if (node[0] < value[0] && (node[1] < steps || (node[1] === steps && node[2] < start))) {
+        node[1] = steps
+        node[2] = start
+        map[y][x] = node
+        results.push([x, y])
+      }
+    }
+    return results
+  }
+
+  const findPath = (x, y) => {
+    const startVal = map[y][x]
+    let nodes = [[x, y]]
+    let steps = 0
+    let smallest = 1500
+    while (nodes.length > 0) {
+      steps++
+      let newNodes = []
+      for (let node of nodes) {
+        if (map[node[1]][node[0]] < smallest) {
+          smallest = map[node[1]][node[0]]
+        }
+        newNodes = newNodes.concat(getAdjacent(node[0], node[1], startVal, steps))
+      }
+      if (newNodes.length === 0) {
+        smallest = nodes.reduce((total, val) => Math.min(total, map[val[1]][val[0]][0]), 1500)
+      }
+      nodes = newNodes
+    }
+    return [steps, startVal[0] - smallest, [x, y]]
+  }
+
+  let best = [0, 0, 0]
+
+  for (let y = 0; y < map.length; y++) {
+    for (let x = 0; x < map[0].length; x++) {
+      if (map[y][x][0] === Math.max(...getAdjacentValues(x, y))) {
+        let option = findPath(x, y)
+        if (option[0] > best[0] || (option[0] === best[0] && option[1] > best[1])) best = option
+      }
+    }
+  }
+
+  console.log(best)
+})

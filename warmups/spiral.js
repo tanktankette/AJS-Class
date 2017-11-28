@@ -1,16 +1,17 @@
+const LEFT = [-1, 0]
+const RIGHT = [1, 0]
+const UP = [0, -1]
+const DOWN = [0, 1]
+
 const generatePath = (size) => {
-  const left = [-1, 0]
-  const right = [1, 0]
-  const up = [0, -1]
-  const down = [0, 1]
   let path = [[0, 0]]
   for (let i = 0; i < size; i++) {
-    path = path.concat(generateStep(i * 2 + 1, path[path.length - 1], up))
-    path = path.concat(generateStep(i * 2 + 1, path[path.length - 1], left))
-    path = path.concat(generateStep(i * 2 + 2, path[path.length - 1], down))
-    path = path.concat(generateStep(i * 2 + 2, path[path.length - 1], right))
+    path = path.concat(generateStep(i * 2 + 1, path[path.length - 1], UP))
+    path = path.concat(generateStep(i * 2 + 1, path[path.length - 1], LEFT))
+    path = path.concat(generateStep(i * 2 + 2, path[path.length - 1], DOWN))
+    path = path.concat(generateStep(i * 2 + 2, path[path.length - 1], RIGHT))
   }
-  path = path.concat(generateStep(size * 2, path[path.length - 1], up))
+  path = path.concat(generateStep(size * 2, path[path.length - 1], UP))
   return path
 }
 
