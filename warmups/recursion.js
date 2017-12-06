@@ -8,12 +8,12 @@ const getSentenceFragment = (offset = 0) => {
 }
 
 const getSentence = (sentence, offset) => {
-  const package = getSentenceFragment(offset)
-  sentence.push(package.data.join(''))
-  if (package.nextPage === null) {
-    return sentence;
+  const pkg = getSentenceFragment(offset)
+  sentence.push(pkg.data.join(''))
+  if (pkg.nextPage === null) {
+    return sentence
   } else {
-    return getSentence(sentence, package.nextPage)
+    return getSentence(sentence, pkg.nextPage)
   }
   // MODIFY CODE HERE ------------
 }

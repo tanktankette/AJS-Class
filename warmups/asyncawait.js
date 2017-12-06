@@ -15,25 +15,25 @@ const getSentence = async (sentence, offset) => {
   const pkg = await getSentenceFragment(offset)
   sentence.push(pkg.data.join(''))
   if (pkg.nextPage === null) {
-    return sentence;
+    return sentence
   } else {
     return getSentence(sentence, pkg.nextPage)
   }
 }
 
 const getSentence2 = async () => {
-  let package = await getSentenceFragment()
-  sentence = package.data.join("")
-  while(package.nextPage){
-    let offset = package.nextPage
-    package = await getSentenceFragment(offset)
-    sentence += package.data.join("")
+  let pkg = await getSentenceFragment()
+  let sentence = pkg.data.join('')
+  while (pkg.nextPage) {
+    let offset = pkg.nextPage
+    pkg = await getSentenceFragment(offset)
+    sentence += pkg.data.join('')
   }
   return sentence
 }
 
 getSentence([], 0)
-.then((sentence) => console.log(sentence.join("")))
+  .then((sentence) => console.log(sentence.join('')))
 
 getSentence2()
-.then(console.log)
+  .then(console.log)
