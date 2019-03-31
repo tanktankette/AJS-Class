@@ -4,6 +4,9 @@
   "description": "",
   "main": "abbreviate.js",
   "dependencies": {
+    "bignum": "^0.13.0",
+    "bignumber": "^1.1.0",
+    "bignumber.js": "^8.1.1",
     "eslint": "^4.9.0",
     "faker": "^4.1.0",
     "node-fetch": "^1.7.3"
